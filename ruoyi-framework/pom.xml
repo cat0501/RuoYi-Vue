@@ -33,6 +33,17 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
+            <!--参考：https://github.com/alibaba/druid/issues/4309#issuecomment-925514365-->
+            <exclusions>
+                <exclusion>
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun</groupId>
+                    <artifactId>jconsole</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- 验证码 -->

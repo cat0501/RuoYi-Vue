@@ -8,9 +8,36 @@
     <artifactId>ruoyi</artifactId>
     <version>3.8.3</version>
 
-    <name>ruoyi</name>
+    <name>RuoYi-Vue 若依管理系统</name>
     <url>http://www.ruoyi.vip</url>
-    <description>若依管理系统</description>
+    <description>
+        项目同步git地址： https://gitee.com/Lemonade19/RuoYi-Vue
+        官方文档：http://doc.ruoyi.vip/ruoyi-vue/
+
+        RuoYi-Vue 是一个 Java EE 企业级快速开发平台，基于经典技术组合（Spring Boot、Spring Security、MyBatis、Jwt、Vue），
+        内置模块如：部门管理、角色用户、菜单及按钮授权、数据权限、系统参数、日志管理、代码生成等。
+        在线定时任务配置；支持集群，支持多数据源，支持分布式事务。
+    </description>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <!--后台服务-->
+        <module>ruoyi-admin</module>
+        <!--框架核心-->
+        <module>ruoyi-framework</module>
+        <!--系统代码-->
+        <module>ruoyi-system</module>
+        <!--定时任务（可移除）-->
+        <module>ruoyi-quartz</module>
+        <!--代码生成（可移除）-->
+        <module>ruoyi-generator</module>
+        <!--工具类
+        spring-boot-starter-security
+        -->
+        <module>ruoyi-common</module>
+    </modules>
+
     
     <properties>
         <ruoyi.version>3.8.3</ruoyi.version>
@@ -186,18 +213,18 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.sun</groupId>
+                <artifactId>tools</artifactId>
+                <version>1.8.0</version>
+                <scope>system</scope>
+                <systemPath>${java.home}/lib/tools.jar</systemPath>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
-    <modules>
-        <module>ruoyi-admin</module>
-        <module>ruoyi-framework</module>
-        <module>ruoyi-system</module>
-        <module>ruoyi-quartz</module>
-        <module>ruoyi-generator</module>
-        <module>ruoyi-common</module>
-    </modules>
-    <packaging>pom</packaging>
+
 
 
     <dependencies>
