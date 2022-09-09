@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import javax.sql.DataSource;
+
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.io.VFS;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -123,10 +125,24 @@ public class MyBatisConfig
         VFS.addImplClass(SpringBootVFS.class);
 
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setTypeAliasesPackage(typeAliasesPackage);
         sessionFactory.setMapperLocations(resolveMapperLocations(StringUtils.split(mapperLocations, ",")));
         sessionFactory.setConfigLocation(new DefaultResourceLoader().getResource(configLocation));
+
         return sessionFactory.getObject();
+
+        // https://blog.csdn.net/zdb1314/article/details/124286025
+        ////使用 mybatis plus 配置
+        //final MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
+        //
+        //mybatisSqlSessionFactoryBean.setDataSource(dataSource);
+        //mybatisSqlSessionFactoryBean.setTypeAliasesPackage(typeAliasesPackage);
+        ////mybatisSqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
+        //mybatisSqlSessionFactoryBean.setMapperLocations(resolveMapperLocations(StringUtils.split(mapperLocations, ",")));
+        //mybatisSqlSessionFactoryBean.setConfigLocation(new DefaultResourceLoader().getResource(configLocation));
+        //return mybatisSqlSessionFactoryBean.getObject();
+
     }
 }
