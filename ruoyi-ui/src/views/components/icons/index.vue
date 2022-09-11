@@ -1,10 +1,12 @@
 <template>
   <div class="icons-container">
+
     <aside>
       <a href="#" target="_blank">Add and use
       </a>
     </aside>
     <el-tabs type="border-card">
+
       <el-tab-pane label="Icons">
         <div v-for="item of svgIcons" :key="item">
           <el-tooltip placement="top">
@@ -18,6 +20,7 @@
           </el-tooltip>
         </div>
       </el-tab-pane>
+
       <el-tab-pane label="Element-UI Icons">
         <div v-for="item of elementIcons" :key="item">
           <el-tooltip placement="top">
@@ -31,9 +34,12 @@
           </el-tooltip>
         </div>
       </el-tab-pane>
+
     </el-tabs>
   </div>
 </template>
+
+
 
 <script>
 import svgIcons from './svg-icons'
@@ -57,6 +63,8 @@ export default {
   }
 }
 </script>
+
+
 
 <style lang="scss" scoped>
 .icons-container {

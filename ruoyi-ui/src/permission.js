@@ -8,10 +8,13 @@ import { isRelogin } from '@/utils/request'
 
 NProgress.configure({ showSpinner: false })
 
+// 配送白名单
 const whiteList = ['/login', '/auth-redirect', '/bind', '/register']
 
+// 路由拦截器（每进入一个任意路径，都会到这里）
 router.beforeEach((to, from, next) => {
   NProgress.start()
+  // 判断是否登陆
   if (getToken()) {
     to.meta.title && store.dispatch('settings/setTitle', to.meta.title)
     /* has token*/
@@ -41,6 +44,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     // 没有token
+    // 是否在白名单
     if (whiteList.indexOf(to.path) !== -1) {
       // 在免登录白名单，直接进入
       next()
