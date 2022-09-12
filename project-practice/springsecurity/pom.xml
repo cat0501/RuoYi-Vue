@@ -11,7 +11,7 @@
     <groupId>com.rudecrab</groupId>
     <artifactId>springsecurity</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springsecurity</name>
+    <name>spring security</name>
     <description>Demo project for Spring Security</description>
 
     <properties>
