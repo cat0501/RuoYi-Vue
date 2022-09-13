@@ -74,8 +74,12 @@ public class SysLoginService {
         // 用户验证
         Authentication authentication = null;
         try {
+            // org.springframework.security.authentication.UsernamePasswordAuthenticationToken
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+            // 要点1：ThreadLocal<Authentication> contextHolder
             AuthenticationContextHolder.setContext(authenticationToken);
+
+            // 要点2：Authentication authenticate(Authentication authentication)
             // 该方法会去调用 UserDetailsServiceImpl.loadUserByUsername
             authentication = authenticationManager.authenticate(authenticationToken);
         } catch (Exception e) {

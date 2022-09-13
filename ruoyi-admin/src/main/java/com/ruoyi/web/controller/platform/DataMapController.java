@@ -48,8 +48,7 @@ public class DataMapController extends BaseController {
     public TableDataInfo search(String keyWords){
         startPage();
         List<Tables> tablesList = tableService.getListByStr(keyWords);
-        //List<Tables> tablesList = tableService.list(null);
-        //return AjaxResult.success(tablesList);
+
         return getDataTable(tablesList);
     }
 

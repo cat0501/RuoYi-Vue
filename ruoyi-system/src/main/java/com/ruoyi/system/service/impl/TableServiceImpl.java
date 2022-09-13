@@ -34,8 +34,7 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Tables> implement
     public List<Tables> getListByStr(String keyWords) {
         LambdaQueryWrapper<Tables> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.like(Tables::getTableName, keyWords);
-        lambdaQueryWrapper.like(Tables::getTableDesc, keyWords);
-
+        lambdaQueryWrapper.or().like(Tables::getTableDesc, keyWords);
         return tableMapper.selectList(lambdaQueryWrapper);
     }
 }
