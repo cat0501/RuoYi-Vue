@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface ITableService extends IService<Tables> {
     List<Tables> getList();
+
+    List<Tables> getListByStr(String keyWords);
 }

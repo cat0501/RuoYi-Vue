@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,8 +24,10 @@ public class Tables implements Serializable {
 
     @ApiModelProperty("库名称")
     private String databaseName;
+
     @ApiModelProperty("表名称")
     private String tableName;
+
     @ApiModelProperty("表描述")
     private String tableDesc;
 
@@ -34,6 +37,7 @@ public class Tables implements Serializable {
     private String createTime;
     @ApiModelProperty("更新时间")
     private String updateTime;
+
     @ApiModelProperty("存储大小")
     private Double storageSize;
 }

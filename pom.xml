@@ -92,10 +92,17 @@
             </dependency>
 
             <!-- SpringBoot集成mybatis框架 -->
+<!--            <dependency>-->
+<!--                <groupId>org.mybatis.spring.boot</groupId>-->
+<!--                <artifactId>mybatis-spring-boot-starter</artifactId>-->
+<!--                <version>${mybatis-spring-boot.version}</version>-->
+<!--            </dependency>-->
+
+            <!-- mybatis-plus -->
             <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis-spring-boot.version}</version>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.0.5</version>
             </dependency>
 
             <!-- pagehelper 分页插件 -->
@@ -221,8 +228,8 @@
                 <artifactId>tools</artifactId>
                 <version>1.8.0</version>
                 <scope>system</scope>
-                <systemPath>${java.home}/lib/tools.jar</systemPath>
-                <!--<systemPath>C:/enviroment/jdk/lib/tools.jar</systemPath>-->
+<!--                <systemPath>${java.home}/lib/tools.jar</systemPath>-->
+                <systemPath>C:/enviroment/jdk/lib/tools.jar</systemPath>
             </dependency>
 
         </dependencies>

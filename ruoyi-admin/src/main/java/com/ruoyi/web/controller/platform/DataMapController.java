@@ -33,10 +33,21 @@ public class DataMapController extends BaseController {
 
     @Anonymous
     @ApiOperation("获取全部表数据")
-    @GetMapping("/list")
+    @GetMapping("/table/list")
     public TableDataInfo list(){
         startPage();
         List<Tables> tablesList = tableService.getList();
+        //List<Tables> tablesList = tableService.list(null);
+        //return AjaxResult.success(tablesList);
+        return getDataTable(tablesList);
+    }
+
+    @Anonymous
+    @ApiOperation("根据关键词筛选数据表")
+    @GetMapping("/table/search")
+    public TableDataInfo search(String keyWords){
+        startPage();
+        List<Tables> tablesList = tableService.getListByStr(keyWords);
         //List<Tables> tablesList = tableService.list(null);
         //return AjaxResult.success(tablesList);
         return getDataTable(tablesList);
