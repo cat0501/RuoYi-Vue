@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ruoyi.common.platform.PageQueryUtil;
 import com.ruoyi.system.domain.Tables;
 import com.ruoyi.system.mapper.TableMapper;
 import com.ruoyi.system.service.ITableService;
@@ -31,10 +32,8 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Tables> implement
     }
 
     @Override
-    public List<Tables> getListByStr(String keyWords) {
-        LambdaQueryWrapper<Tables> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(Tables::getTableName, keyWords);
-        lambdaQueryWrapper.or().like(Tables::getTableDesc, keyWords);
-        return tableMapper.selectList(lambdaQueryWrapper);
+    public List<Tables> getListByStr(PageQueryUtil pageQueryUtil) {
+
+        return tableMapper.selectListByKeyWords(pageQueryUtil);
     }
 }

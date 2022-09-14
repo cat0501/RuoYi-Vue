@@ -39,8 +39,8 @@ public class SwaggerConfig
     private boolean enabled;
 
     /** 设置请求的统一前缀 */
-    @Value("${swagger.pathMapping}")
-    private String pathMapping;
+    //@Value("${swagger.pathMapping}")
+    //private String pathMapping;
 
     /**
      * 创建API
@@ -64,8 +64,8 @@ public class SwaggerConfig
                 .build()
                 /* 设置安全模式，swagger可以设置访问token */
                 .securitySchemes(securitySchemes())
-                .securityContexts(securityContexts())
-                .pathMapping(pathMapping);
+                .securityContexts(securityContexts());
+                //.pathMapping(pathMapping);
     }
 
     /**

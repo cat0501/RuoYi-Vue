@@ -2,21 +2,23 @@ package com.ruoyi.web.controller.platform;
 
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.platform.PageQueryUtil;
 import com.ruoyi.system.domain.Tables;
 import com.ruoyi.system.service.ITableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static com.ruoyi.common.utils.PageUtils.startPage;
 
 /**
  * @author Lemonade
@@ -42,12 +44,21 @@ public class DataMapController extends BaseController {
         return getDataTable(tablesList);
     }
 
-    @Anonymous
+    //@Anonymous
     @ApiOperation("根据关键词筛选数据表")
     @GetMapping("/table/search")
-    public TableDataInfo search(String keyWords){
-        startPage();
-        List<Tables> tablesList = tableService.getListByStr(keyWords);
+    public TableDataInfo search(@ApiParam(value = "搜索关键字") String keyWords,
+                                @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber) {
+        //startPage();
+        Map<String, Object> params = new HashMap<>();
+        if (pageNumber == null || pageNumber < 1) {
+            pageNumber = 1;
+        }
+        params.put("keyWords", keyWords);
+        params.put("page", pageNumber);
+        params.put("limit", 10);
+        PageQueryUtil pageUtil = new PageQueryUtil(params);
+        List<Tables> tablesList = tableService.getListByStr(pageUtil);
 
         return getDataTable(tablesList);
     }

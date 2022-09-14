@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoyi.common.platform.PageQueryUtil;
 import com.ruoyi.system.domain.Tables;
 
 import java.util.List;
@@ -14,5 +15,5 @@ import java.util.List;
 public interface ITableService extends IService<Tables> {
     List<Tables> getList();
 
-    List<Tables> getListByStr(String keyWords);
+    List<Tables> getListByStr(PageQueryUtil pageQueryUtil);
 }

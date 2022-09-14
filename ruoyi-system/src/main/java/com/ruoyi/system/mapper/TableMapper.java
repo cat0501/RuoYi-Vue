@@ -1,8 +1,10 @@
 package com.ruoyi.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ruoyi.common.platform.PageQueryUtil;
 import com.ruoyi.system.domain.Tables;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,4 +16,6 @@ import java.util.List;
 @Mapper
 public interface TableMapper extends BaseMapper<Tables> {
     List<Tables> getList();
+
+    List<Tables> selectListByKeyWords(PageQueryUtil pageQueryUtil);
 }

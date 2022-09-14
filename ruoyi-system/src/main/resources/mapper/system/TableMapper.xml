@@ -4,14 +4,14 @@
 
     <!-- 常用标签 -->
     <resultMap id="BaseResultMap" type="com.ruoyi.system.domain.Tables">
-        <id     column="id"              jdbcType="BIGINT"       property="id" />
-        <result column="database_name"   jdbcType="VARCHAR"      property="databaseName" />
-        <result column="table_name"      jdbcType="VARCHAR"      property="tableName" />
-        <result column="table_desc"      jdbcType="VARCHAR"      property="tableDesc" />
-        <result column="manager"         jdbcType="VARCHAR"      property="manager" />
-        <result column="create_time"     jdbcType="VARCHAR"      property="createTime" />
-        <result column="update_time"     jdbcType="VARCHAR"      property="updateTime" />
-        <result column="storage_size"    jdbcType="DOUBLE"       property="storageSize" />
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="database_name" jdbcType="VARCHAR" property="databaseName"/>
+        <result column="table_name" jdbcType="VARCHAR" property="tableName"/>
+        <result column="table_desc" jdbcType="VARCHAR" property="tableDesc"/>
+        <result column="manager" jdbcType="VARCHAR" property="manager"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="storage_size" jdbcType="DOUBLE" property="storageSize"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -19,8 +19,27 @@
     </sql>
 
     <select id="getList" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/>
+        select
+        <include refid="Base_Column_List"/>
         from dsmp_all_tables
+    </select>
+
+    <select id="selectListByKeyWords" parameterType="Map" resultType="com.ruoyi.system.domain.Tables">
+        SELECT id,
+               database_name,
+               table_name,
+               table_desc,
+               manager,
+               create_time,
+               update_time,
+               storage_size
+        FROM dsmp_all_tables
+        WHERE table_name LIKE CONCAT('%', #{keyWords}, '%')
+           OR table_desc LIKE CONCAT('%', #{keyWords}, '%')
+        ORDER BY LENGTH(substring_index(table_desc, #{keyWords}, 1)),
+                 LENGTH(table_desc),
+                 update_time desc
+        LIMIT 10
     </select>
 
 
