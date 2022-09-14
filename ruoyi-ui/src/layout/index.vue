@@ -9,7 +9,9 @@
         <navbar />
         <tags-view v-if="needTagsView" />
       </div>
+
       <app-main />
+
       <right-panel>
         <settings />
       </right-panel>
@@ -28,6 +30,7 @@ import { mapState } from 'vuex'
 import variables from '@/assets/styles/variables.scss'
 
 export default {
+  //
   name: 'Layout',
   components: {
     AppMain,

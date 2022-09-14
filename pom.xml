@@ -228,8 +228,8 @@
                 <artifactId>tools</artifactId>
                 <version>1.8.0</version>
                 <scope>system</scope>
-<!--                <systemPath>${java.home}/lib/tools.jar</systemPath>-->
-                <systemPath>C:/enviroment/jdk/lib/tools.jar</systemPath>
+                <systemPath>${java.home}/lib/tools.jar</systemPath>
+                <!--<systemPath>C:/enviroment/jdk/lib/tools.jar</systemPath>-->
             </dependency>
 
         </dependencies>
