@@ -3,7 +3,7 @@
 <mapper namespace="com.ruoyi.system.mapper.TableMapper">
 
     <!-- 常用标签 -->
-    <resultMap id="BaseResultMap" type="com.ruoyi.system.domain.Tables">
+    <resultMap id="BaseResultMap" type="com.ruoyi.system.domain.paltform.Tables">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="database_name" jdbcType="VARCHAR" property="databaseName"/>
         <result column="table_name" jdbcType="VARCHAR" property="tableName"/>
@@ -12,10 +12,12 @@
         <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
         <result column="storage_size" jdbcType="DOUBLE" property="storageSize"/>
+        <result column="cate" jdbcType="INTEGER" property="cate"/>
+        <result column="administrator" jdbcType="VARCHAR" property="administrator"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, database_name, table_name, table_desc, manager, create_time,  update_time, storage_size
+        id, database_name, table_name, table_desc, manager, create_time,  update_time, storage_size, cate, administrator
     </sql>
 
     <select id="getList" resultMap="BaseResultMap">
@@ -24,7 +26,7 @@
         from dsmp_all_tables
     </select>
 
-    <select id="selectListByKeyWords" parameterType="Map" resultType="com.ruoyi.system.domain.Tables">
+    <select id="selectListByKeyWords" parameterType="Map" resultType="com.ruoyi.system.domain.paltform.Tables">
         SELECT id,
                database_name,
                table_name,
@@ -36,10 +38,27 @@
         FROM dsmp_all_tables
         WHERE table_name LIKE CONCAT('%', #{keyWords}, '%')
            OR table_desc LIKE CONCAT('%', #{keyWords}, '%')
+        <if test="cate!=null and cate!=''">
+            and cate = #{cate}
+        </if>
+        <if test="administrator!=null and administrator!=''">
+            and administrator = #{administrator}
+        </if>
         ORDER BY LENGTH(substring_index(table_desc, #{keyWords}, 1)),
                  LENGTH(table_desc),
                  update_time desc
         LIMIT 10
+    </select>
+
+    <select id="getListByCates" resultType="com.ruoyi.system.domain.paltform.Tables">
+        SELECT <include refid="Base_Column_List"/>
+        FROM dsmp_all_tables
+        WHERE is_deleted = 0
+        <if test="cateIds != null and cateIds.size() > 0"> and cate in
+            <foreach item="item" collection="cateIds" open="(" separator="," close=")" index="index">
+                #{item}
+            </foreach>
+        </if>
     </select>
 
 

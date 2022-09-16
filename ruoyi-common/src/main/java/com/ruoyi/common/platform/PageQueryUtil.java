@@ -7,9 +7,9 @@ import java.util.Map;
  * 分页查询参数
  */
 public class PageQueryUtil extends LinkedHashMap<String, Object> {
-    //当前页码
+    // 当前页码
     private int page;
-    //每页条数
+    // 每页条数
     private int limit;
 
     public PageQueryUtil(Map<String, Object> params) {

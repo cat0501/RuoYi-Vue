@@ -1,15 +1,13 @@
 package com.ruoyi.system.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.platform.PageQueryUtil;
-import com.ruoyi.system.domain.Tables;
+import com.ruoyi.system.domain.paltform.Tables;
 import com.ruoyi.system.mapper.TableMapper;
 import com.ruoyi.system.service.ITableService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,8 +30,10 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Tables> implement
     }
 
     @Override
-    public List<Tables> getListByStr(PageQueryUtil pageQueryUtil) {
+    public List<Tables> getListByStr(PageQueryUtil pageQueryUtil, HashMap<String, Object> map) {
+        Integer cate = (Integer) map.get("cate");
+        String administrator = (String) map.get("administrator");
 
-        return tableMapper.selectListByKeyWords(pageQueryUtil);
+        return tableMapper.selectListByKeyWords(pageQueryUtil, cate, administrator);
     }
 }
