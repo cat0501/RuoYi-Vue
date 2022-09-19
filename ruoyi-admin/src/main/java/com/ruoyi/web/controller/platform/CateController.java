@@ -3,16 +3,15 @@ package com.ruoyi.web.controller.platform;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.paltform.Cate;
 import com.ruoyi.system.domain.paltform.Tables;
+import com.ruoyi.system.domain.paltform.vo.CateInfoVO;
 import com.ruoyi.system.domain.paltform.vo.CateVO;
 import com.ruoyi.system.service.ICateService;
+import com.ruoyi.system.service.ITableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,8 +31,11 @@ public class CateController {
 
     ICateService cateService;
 
-    public CateController(ICateService cateService) {
+    ITableService tableService;
+
+    public CateController(ICateService cateService, ITableService tableService) {
         this.cateService = cateService;
+        this.tableService = tableService;
     }
 
     @ApiOperation("资产目录列表")
@@ -94,6 +96,21 @@ public class CateController {
             cateService.addCate(cate);
         }
         return AjaxResult.success();
+    }
+
+    @ApiOperation("查看目录信息")
+    @GetMapping("/cate/getCateInfo")
+    public AjaxResult getCateInfo(Integer cateId){
+
+        CateInfoVO cateInfo = cateService.getCateInfo(cateId);
+        return AjaxResult.success(cateInfo);
+    }
+
+    @ApiOperation("数据表资产管理——注销编目")
+    @PostMapping("/table/closeTableById")
+    public AjaxResult closeTableById(@RequestParam Integer id) {
+
+        return AjaxResult.success(tableService.closeTableById(id));
     }
 
 }

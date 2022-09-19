@@ -34,8 +34,17 @@ public class Cate {
     private String updateTime;
 
     @ApiModelProperty("是否删除")
-    private String isDeleted;
+    private Integer isDeleted;
 
-    @ApiModelProperty("父级ID")
+    @ApiModelProperty("上一级目录ID")
     private Integer parentId;
+
+    @ApiModelProperty("目录描述")
+    private String description;
+
+    @ApiModelProperty("所属部门")
+    private String dept;
+
+    @ApiModelProperty("创建人")
+    private String author;
 }

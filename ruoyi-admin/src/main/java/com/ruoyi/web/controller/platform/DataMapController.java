@@ -35,12 +35,26 @@ public class DataMapController extends BaseController {
     @Autowired
     ITableService tableService;
 
-    @Anonymous
-    @ApiOperation("获取全部表数据")
+    //@Anonymous
+    @ApiOperation("获取全部表数据（分页）")
     @GetMapping("/table/list")
-    public TableDataInfo list(){
-        startPage();
-        List<Tables> tablesList = tableService.getList();
+    public TableDataInfo list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
+                              @RequestParam(required = false) @ApiParam(value = "每页条数") Integer limit,
+                              @RequestParam(required = false) HashMap<String, Object> map){
+
+        HashMap<String, Object> objectMap = new HashMap<>(map);
+        if (pageNumber == null || pageNumber < 1) {
+            pageNumber = 1;
+        }
+        if (limit == null || limit < 1) {
+            limit = 10;
+        }
+
+        objectMap.put("page", pageNumber);
+        objectMap.put("limit", limit);
+        objectMap.put("start", (pageNumber - 1) * limit);
+
+        List<Tables> tablesList = tableService.getList(objectMap);
         return getDataTable(tablesList);
     }
 
@@ -50,10 +64,9 @@ public class DataMapController extends BaseController {
     public TableDataInfo search(@ApiParam(value = "搜索关键字") String keyWords,
                                 @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
                                 @RequestParam(required = false) @ApiParam(value = "每页条数") Integer limit,
-                                @RequestParam HashMap<String, Object> map) {
+                                @RequestParam(required = false) HashMap<String, Object> map) {
         log.info("----------------------------------->" + map);
-        startPage();
-        Map<String, Object> params = new HashMap<>();
+        //startPage();
 
 
         if (pageNumber == null || pageNumber < 1) {
@@ -63,12 +76,12 @@ public class DataMapController extends BaseController {
             limit = 10;
         }
 
-
-        params.put("keyWords", keyWords);
-        params.put("page", pageNumber);
-        params.put("limit", limit);
-        PageQueryUtil pageUtil = new PageQueryUtil(params);
-        List<Tables> tablesList = tableService.getListByStr(pageUtil, map);
+        HashMap<String, Object> objectMap = new HashMap<>(map);
+        objectMap.put("keyWords", keyWords);
+        objectMap.put("page", pageNumber);
+        objectMap.put("limit", limit);
+        objectMap.put("start", (pageNumber - 1) * limit);
+        List<Tables> tablesList = tableService.getListByStr(objectMap);
 
         return getDataTable(tablesList);
     }

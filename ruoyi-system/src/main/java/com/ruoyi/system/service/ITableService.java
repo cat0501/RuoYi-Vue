@@ -14,7 +14,24 @@ import java.util.List;
  * @updateTime 2022/9/8 11:53
  */
 public interface ITableService extends IService<Tables> {
-    List<Tables> getList();
 
-    List<Tables> getListByStr(PageQueryUtil pageQueryUtil, HashMap<String, Object> map);
+    /**
+     * 获取全部数据表
+     */
+    List<Tables> getList(HashMap<String, Object> objectMap);
+
+    /**
+     * 根据关键词筛选数据表
+     */
+    List<Tables> getListByStr(HashMap<String, Object> map);
+
+    /**
+     * 公开 / 隐藏数据表
+     */
+    Void openTableById(Integer id, Integer isDeleted);
+
+    /**
+     * 注销编目
+     */
+    Void closeTableById(Integer id);
 }

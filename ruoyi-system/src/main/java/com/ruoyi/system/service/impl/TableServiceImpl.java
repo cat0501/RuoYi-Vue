@@ -25,15 +25,25 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Tables> implement
     }
 
     @Override
-    public List<Tables> getList() {
-        return tableMapper.getList();
+    public List<Tables> getList(HashMap<String, Object> objectMap) {
+        return tableMapper.getList(objectMap);
     }
 
     @Override
-    public List<Tables> getListByStr(PageQueryUtil pageQueryUtil, HashMap<String, Object> map) {
-        Integer cate = (Integer) map.get("cate");
-        String administrator = (String) map.get("administrator");
+    public List<Tables> getListByStr(HashMap<String, Object> map) {
+        //Integer cate = (Integer) map.get("cate");
+        //String administrator = (String) map.get("administrator");
 
-        return tableMapper.selectListByKeyWords(pageQueryUtil, cate, administrator);
+        return tableMapper.selectListByKeyWords(map);
+    }
+
+    @Override
+    public Void openTableById(Integer id, Integer isDeleted) {
+        return tableMapper.openTableById(id, isDeleted);
+    }
+
+    @Override
+    public Void closeTableById(Integer id) {
+        return tableMapper.closeTableById(id);
     }
 }
