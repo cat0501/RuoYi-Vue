@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.platform;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.paltform.Cate;
@@ -12,9 +13,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,6 +30,7 @@ import static java.util.stream.Collectors.groupingBy;
  * @updateTime 2022/9/16 10:02
  */
 @Api("数据资产目录")
+@Slf4j
 @RestController
 @RequestMapping("/platform")
 public class CateController extends BaseController {
@@ -132,6 +137,39 @@ public class CateController extends BaseController {
     public AjaxResult closeTableById(@RequestParam Integer id) {
 
         return AjaxResult.success(tableService.closeTableById(id));
+    }
+
+    @ApiOperation("时间格式修改")
+    @PostMapping("/table/update")
+    public void updateAllTableCreateTime(int start, int end){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // 结果 +14 小时
+
+        LambdaQueryWrapper<Tables> wrapper = new LambdaQueryWrapper<>();
+        wrapper.between(Tables::getId, start, end);
+        List<Tables> tablesList = tableService.list(wrapper);
+
+        int count = 0;
+        for (Tables tables : tablesList) {
+            String createTime = tables.getCreateTime();
+            String str = sdf.format(Date.parse(createTime));
+            tables.setCreateTime(str);
+
+            boolean b = tableService.saveOrUpdate(tables);
+
+            if (b) {
+                count ++;
+                log.info("更新成功...");
+            }
+        }
+        System.out.println(count);
+    }
+
+    public static void main(String[] args) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String str = sdf.format(Date.parse("Thu Jul 22 23:58:32 CST 2010"));
+        System.out.println(str);
     }
 
 }

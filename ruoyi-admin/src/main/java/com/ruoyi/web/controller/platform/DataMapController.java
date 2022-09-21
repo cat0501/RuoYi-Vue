@@ -58,15 +58,24 @@ public class DataMapController extends BaseController {
     }
 
     //@Anonymous
-    @ApiOperation("根据关键词筛选数据表——分页")
+    @ApiOperation("根据关键词检索数据表、筛选——分页")
     @GetMapping("/table/search")
     public TableDataInfo search(@ApiParam(value = "搜索关键字") String keyWords,
                                 @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNum,
                                 @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
-                                @RequestParam(required = false) HashMap<String, Object> map) {
-        log.info("----------------------------------->" + map);
+                                @RequestBody(required = false) SearchConditions searchConditions) {
+        log.info("----------------------------------->" + searchConditions);
+
         HashMap<String, Object> objectMap = getPage(pageNum, pageSize);
-        objectMap.putAll(map);
+        // 所属目录
+        objectMap.put("cate", searchConditions.getCate());
+        // 所属部门
+        objectMap.put("dept", searchConditions.getDept());
+        // 资产管理人
+        objectMap.put("administrator", searchConditions.getAdministrator());
+        // 创建时间
+        objectMap.put("createTime", searchConditions.getCreateTime());
+
         objectMap.put("keyWords", keyWords);
 
         List<Tables> tablesList = tableService.getListByStr(objectMap);

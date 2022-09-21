@@ -31,6 +31,6 @@ public class SearchConditions {
     private String cate;
 
     @ApiModelProperty("负责人")
-    private String author;
+    private String administrator;
 
 }

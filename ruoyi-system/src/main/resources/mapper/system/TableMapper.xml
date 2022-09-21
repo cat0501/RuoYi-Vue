@@ -14,6 +14,8 @@
         <result column="storage_size"   jdbcType="DOUBLE"       property="storageSize"/>
         <result column="cate"           jdbcType="INTEGER"      property="cate"/>
         <result column="administrator"  jdbcType="VARCHAR"      property="administrator"/>
+        <result column="is_deleted"     jdbcType="INTEGER"      property="isDeleted"/>
+        <result column="table_type"     jdbcType="VARCHAR"      property="tableType"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -58,14 +60,7 @@
     </select>
 
     <select id="selectListByKeyWords" parameterType="Map" resultType="com.ruoyi.system.domain.paltform.Tables">
-        SELECT id,
-               database_name,
-               table_name,
-               table_desc,
-               manager,
-               create_time,
-               update_time,
-               storage_size
+        SELECT <include refid="Base_Column_List"/>
         FROM dsmp_all_tables
         WHERE table_name LIKE CONCAT('%', #{keyWords}, '%')
            OR table_desc LIKE CONCAT('%', #{keyWords}, '%')
