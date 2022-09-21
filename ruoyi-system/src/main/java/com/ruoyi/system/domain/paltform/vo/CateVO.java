@@ -28,4 +28,6 @@ public class CateVO {
 
 
     private List<CateVO> children;
+
+    private Integer total;
 }

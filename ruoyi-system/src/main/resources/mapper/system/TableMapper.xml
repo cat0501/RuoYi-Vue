@@ -38,10 +38,23 @@
 
     <!-- 获取全部数据表 -->
     <select id="getList" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
+        select <include refid="Base_Column_List"/>
         from dsmp_all_tables
-        LIMIT #{start},#{limit}
+        <if test="searchConditions!=null">
+            <where>
+                <if test="searchConditions.keyWords!=null and searchConditions.keyWords!=''">
+                    and table_name like CONCAT('%',#{searchConditions.keyWords},'%')
+                    or table_desc like CONCAT('%',#{searchConditions.keyWords},'%')
+                </if>
+                <if test="searchConditions.group!=null and searchConditions.group!=''">
+                    and manager = #{searchConditions.group}
+                </if>
+                <if test="searchConditions.cate!=null and searchConditions.cate!=''">
+                    and cate = #{searchConditions.cate}
+                </if>
+            </where>
+        </if>
+        LIMIT #{objectMap.start},#{objectMap.limit}
     </select>
 
     <select id="selectListByKeyWords" parameterType="Map" resultType="com.ruoyi.system.domain.paltform.Tables">
@@ -77,6 +90,12 @@
                 #{item}
             </foreach>
         </if>
+    </select>
+
+
+    <select id="getTotal" resultType="java.lang.Integer">
+        select count(*) from dsmp_all_tables
+        where cate = #{cateId}
     </select>
 
 

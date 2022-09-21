@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.platform;
 
+import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.paltform.Cate;
 import com.ruoyi.system.domain.paltform.Tables;
@@ -9,6 +10,7 @@ import com.ruoyi.system.service.ICateService;
 import com.ruoyi.system.service.ITableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.ruoyi.common.utils.PageUtils.startPage;
 import static java.util.stream.Collectors.groupingBy;
 
 /**
@@ -27,7 +28,7 @@ import static java.util.stream.Collectors.groupingBy;
 @Api("数据资产目录")
 @RestController
 @RequestMapping("/platform")
-public class CateController {
+public class CateController extends BaseController {
 
     ICateService cateService;
 
@@ -42,14 +43,34 @@ public class CateController {
     @GetMapping("/cate/list")
     public AjaxResult getCateList() throws InstantiationException, IllegalAccessException {
         List<Cate> cateList = cateService.list(null);
-        List<CateVO> vos = getCategories(CateVO.class, cateList, 1);
-        List<CateVO> sos = getCategories(CateVO.class, cateList, 2);
-        List<CateVO> tos = getCategories(CateVO.class, cateList, 3);
+        List<CateVO> vos = getCategories(cateList, 1);
+        List<CateVO> sos = getCategories(cateList, 2);
+        List<CateVO> tos = getCategories(cateList, 3);
 
         setNextLevel(vos, sos);
         setNextLevel(sos, tos);
 
-        return AjaxResult.success(vos);
+        // 总数据表数量
+        int sumTotal = 0;
+        for (CateVO cateVO : vos) {
+            int total = cateService.getTableListByCate(cateVO.getId(), null, null).size();
+            sumTotal += total;
+
+            cateVO.setTotal(total);
+        }
+
+        for (CateVO cateVO : sos) {
+            cateVO.setTotal(cateService.getTableListByCate(cateVO.getId(), null, null).size());
+        }
+        for (CateVO cateVO : tos) {
+            cateVO.setTotal(cateService.getTableListByCate(cateVO.getId(), null, null).size());
+        }
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("data", vos);
+        map.put("total", sumTotal);
+
+        return AjaxResult.success(map);
     }
 
     private void setNextLevel(List<CateVO> target, List<CateVO> source) {
@@ -65,14 +86,13 @@ public class CateController {
         }
     }
 
-    private <T> List<T> getCategories(Class<T> t, List<Cate> categories, int level)
-            throws InstantiationException, IllegalAccessException {
+    private List<CateVO> getCategories(List<Cate> categories, int level) {
         List<Cate> categoryVOS = categories.stream()
                 .filter(e -> e.getCateLevel() == level).collect(Collectors.toList());
 
-        List<T> vos = new ArrayList<>();
+        List<CateVO> vos = new ArrayList<>();
         for (Cate goodsCategory : categoryVOS) {
-            T categoryVO = t.newInstance();
+            CateVO categoryVO = new CateVO();
             BeanUtils.copyProperties(goodsCategory, categoryVO);
             vos.add(categoryVO);
         }
@@ -80,12 +100,13 @@ public class CateController {
     }
 
 
-    @ApiOperation("查看目录下的数据资产")
+    @ApiOperation("查看目录下的数据资产——分页")
     @GetMapping("/cate/getTableListByCate")
-    public AjaxResult getTableListByCate(Integer cate){
-        startPage();
-
-        List<Tables> tableListByCate = cateService.getTableListByCate(cate);
+    public AjaxResult getTableListByCate(Integer cate,
+                                         @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNum,
+                                         @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize) {
+        //startPage(); // 此方法配合前端完成自动分页
+        List<Tables> tableListByCate = cateService.getTableListByCate(cate, pageNum, pageSize);
         return AjaxResult.success(tableListByCate);
     }
 
