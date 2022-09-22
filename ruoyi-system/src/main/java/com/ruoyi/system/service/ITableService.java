@@ -2,7 +2,6 @@ package com.ruoyi.system.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ruoyi.common.platform.PageQueryUtil;
 import com.ruoyi.system.domain.paltform.Tables;
 import com.ruoyi.system.domain.paltform.vo.SearchConditions;
 
@@ -30,6 +29,11 @@ public interface ITableService extends IService<Tables> {
      * 公开 / 隐藏数据表
      */
     Void openTableById(Integer id, Integer isDeleted);
+
+    /**
+     * 公开 / 隐藏数据表（批量）
+     */
+    void batchUpdateById(Integer[] ids, Integer status);
 
     /**
      * 注销编目

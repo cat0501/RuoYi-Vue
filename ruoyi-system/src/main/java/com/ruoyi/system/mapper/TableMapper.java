@@ -27,10 +27,14 @@ public interface TableMapper extends BaseMapper<Tables> {
 
     List<Tables> getListByCates(@Param("cateIds") List<Integer> cateIds);
 
+    // 公开 / 隐藏数据表
     Void openTableById(Integer id, Integer isDeleted);
 
     Void closeTableById(Integer id);
 
     int getTotal(int cateId);
+
+    // 公开 / 隐藏数据表（批量）
+    void batchUpdateById(@Param("ids") Integer[] ids, @Param("status") Integer status);
 
 }

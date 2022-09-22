@@ -46,7 +46,7 @@ public class CateController extends BaseController {
 
     @ApiOperation("资产目录列表")
     @GetMapping("/cate/list")
-    public AjaxResult getCateList() throws InstantiationException, IllegalAccessException {
+    public AjaxResult getCateList() {
         List<Cate> cateList = cateService.list(null);
         List<CateVO> vos = getCategories(cateList, 1);
         List<CateVO> sos = getCategories(cateList, 2);
@@ -116,7 +116,7 @@ public class CateController extends BaseController {
     }
 
     @ApiOperation("新增资产目录")
-    @GetMapping("/cate/add")
+    @PostMapping("/cate/add")
     public AjaxResult addCate(@RequestBody Cate cate){
         if (cate != null){
             cateService.addCate(cate);
@@ -130,6 +130,17 @@ public class CateController extends BaseController {
 
         CateInfoVO cateInfo = cateService.getCateInfo(cateId);
         return AjaxResult.success(cateInfo);
+    }
+
+    @ApiOperation("资产目录管理——新增编目")
+    @PutMapping("/cate/putCate")
+    public AjaxResult putCate(@RequestParam Integer id, @RequestParam Integer cateId){
+        Tables tables = tableService.getById(id);
+        tables.setCate(cateId);
+        tables.setIsCancel(1);
+
+        tableService.saveOrUpdate(tables);
+        return AjaxResult.success();
     }
 
     @ApiOperation("数据表资产管理——注销编目")
@@ -165,11 +176,11 @@ public class CateController extends BaseController {
         System.out.println(count);
     }
 
-    public static void main(String[] args) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        String str = sdf.format(Date.parse("Thu Jul 22 23:58:32 CST 2010"));
-        System.out.println(str);
-    }
+    //public static void main(String[] args) {
+    //    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    //
+    //    String str = sdf.format(Date.parse("Thu Jul 22 23:58:32 CST 2010"));
+    //    System.out.println(str);
+    //}
 
 }

@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.platform;
 
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.paltform.Tables;
 import com.ruoyi.system.domain.paltform.vo.SearchConditions;
@@ -11,8 +12,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Lemonade
@@ -81,6 +81,14 @@ public class DataMapController extends BaseController {
         List<Tables> tablesList = tableService.getListByStr(objectMap);
 
         return getDataTable(tablesList);
+    }
+
+    @ApiOperation("数据表批量公开/隐藏")
+    @PutMapping("/table/open/batch")
+    public AjaxResult batchOpenOr(Integer[] ids, Integer status){
+
+        tableService.batchUpdateById(ids, status);
+        return AjaxResult.success();
     }
 
 }

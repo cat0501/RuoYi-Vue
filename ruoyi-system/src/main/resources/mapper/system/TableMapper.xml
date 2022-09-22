@@ -8,7 +8,7 @@
         <result column="database_name"  jdbcType="VARCHAR"      property="databaseName"/>
         <result column="table_name"     jdbcType="VARCHAR"      property="tableName"/>
         <result column="table_desc"     jdbcType="VARCHAR"      property="tableDesc"/>
-        <result column="manager"        jdbcType="VARCHAR"      property="manager"/>
+        <result column="dept"           jdbcType="VARCHAR"      property="dept"/>
         <result column="create_time"    jdbcType="VARCHAR"      property="createTime"/>
         <result column="update_time"    jdbcType="VARCHAR"      property="updateTime"/>
         <result column="storage_size"   jdbcType="DOUBLE"       property="storageSize"/>
@@ -19,7 +19,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, database_name, table_name, table_desc, manager, create_time,  update_time, storage_size, cate, administrator
+        id, database_name, table_name, table_desc, dept, create_time,  update_time, storage_size, is_deleted, cate, administrator
     </sql>
 
     <update id="openTableById">
@@ -33,9 +33,21 @@
     <update id="closeTableById">
         update dsmp_all_tables
         <set>
-            is_cancel = #{isCancel,jdbcType=INTEGER},
+            is_cancel = 0,
         </set>
         where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="batchUpdateById">
+        update dsmp_all_tables
+        <set>
+            is_deleted = #{status,jdbcType=INTEGER},
+        </set>
+        <if test="ids != null and ids.length > 0"> where id in
+            <foreach item="item" collection="ids" open="(" separator="," close=")" index="index">
+                #{item}
+            </foreach>
+        </if>
     </update>
 
     <!-- 获取全部数据表 -->
@@ -49,7 +61,7 @@
                     or table_desc like CONCAT('%',#{searchConditions.keyWords},'%')
                 </if>
                 <if test="searchConditions.group!=null and searchConditions.group!=''">
-                    and manager = #{searchConditions.group}
+                    and dept = #{searchConditions.group}
                 </if>
                 <if test="searchConditions.cate!=null and searchConditions.cate!=''">
                     and cate = #{searchConditions.cate}

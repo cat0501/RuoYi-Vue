@@ -35,11 +35,25 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Tables> implement
         return tableMapper.selectListByKeyWords(map);
     }
 
+    /**
+     * 公开 / 隐藏数据表
+     */
     @Override
     public Void openTableById(Integer id, Integer isDeleted) {
         return tableMapper.openTableById(id, isDeleted);
     }
 
+    /**
+     * 公开 / 隐藏数据表（批量）
+     */
+    @Override
+    public void batchUpdateById(Integer[] ids, Integer status) {
+        tableMapper.batchUpdateById(ids, status);
+    }
+
+    /**
+     * 注销编目
+     */
     @Override
     public Void closeTableById(Integer id) {
         return tableMapper.closeTableById(id);
@@ -47,7 +61,6 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Tables> implement
 
     @Override
     public int getTotal(int cateId) {
-
         return tableMapper.getTotal(cateId);
     }
 }

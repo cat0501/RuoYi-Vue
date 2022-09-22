@@ -31,13 +31,13 @@ public class ICateServiceImpl extends ServiceImpl<CateMapper, Cate> implements I
 
     @Override
     public List<Tables> getTableListByCate(Integer cate, Integer pageNum, Integer pageSize) {
-        // 获取所选目录 数据表
+        // 获取所选目录的 数据表
         LambdaQueryWrapper<Tables> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Tables::getCate, cate);
         List<Tables> selectList = tableMapper.selectList(queryWrapper);
         List<Tables> tablesList = new ArrayList<>(selectList);
 
-        // 获取所选目录 数据表（子一级）
+        // 获取所选目录的 数据表（子一级）
         LambdaQueryWrapper<Cate> queryWrapper2 = new LambdaQueryWrapper<>();
         queryWrapper2.eq(Cate::getParentId, cate);
         List<Cate> cases = cateMapper.selectList(queryWrapper2);
@@ -48,7 +48,7 @@ public class ICateServiceImpl extends ServiceImpl<CateMapper, Cate> implements I
             tablesList.addAll(selectList2);
         }
 
-        // 获取所选目录 数据表（子二级）
+        // 获取所选目录的 数据表（子二级）
         if (cases.size() > 0){
             List<Integer> ids = new ArrayList<>();
             for (Cate aCase : cases) {
