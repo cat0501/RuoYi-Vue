@@ -12,8 +12,8 @@ import lombok.experimental.Accessors;
 @ApiModel(value = "SearchConditions", description = "数据表筛选条件")
 public class SearchConditions {
 
-    @ApiModelProperty("关键词")
-    private String keyWords;
+    //@ApiModelProperty("关键词")
+    //private String keyWords;
 
     @ApiModelProperty("工作组")
     private String group;
@@ -21,14 +21,17 @@ public class SearchConditions {
     @ApiModelProperty("表时效")
     private String aging;
 
-    @ApiModelProperty("创建日期")
-    private String createTime;
+    @ApiModelProperty("创建时间 0最新 1倒序")
+    private Integer createTime;
+
+    @ApiModelProperty("更新时间 0最新 1倒序")
+    private Integer updateTime;
 
     @ApiModelProperty("所属部门")
     private String dept;
 
     @ApiModelProperty("所属目录")
-    private String cate;
+    private Integer cate;
 
     @ApiModelProperty("负责人")
     private String administrator;

@@ -35,6 +35,11 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Tables> implement
         return tableMapper.selectListByKeyWords(map);
     }
 
+    @Override
+    public List<Tables> getListByOrder(HashMap<String, Object> map) {
+        return tableMapper.getListByOrder(map);
+    }
+
     /**
      * 公开 / 隐藏数据表
      */

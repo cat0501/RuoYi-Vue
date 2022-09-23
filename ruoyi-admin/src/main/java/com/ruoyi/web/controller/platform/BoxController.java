@@ -34,7 +34,8 @@ public class BoxController {
     @GetMapping("/cate/dept")
     public AjaxResult getDept() {
         ArrayList<String> objects = new ArrayList<>();
-
+        objects.add("数据智能事业部1");
+        objects.add("数据智能事业部2");
         return AjaxResult.success(objects);
     }
 
@@ -42,7 +43,17 @@ public class BoxController {
     @GetMapping("/cate/administrator")
     public AjaxResult getAdministrator() {
         ArrayList<String> objects = new ArrayList<>();
+        objects.add("admin1");
+        objects.add("admin2");
+        return AjaxResult.success(objects);
+    }
 
+    @ApiOperation("表时效")
+    @GetMapping("/cate/online")
+    public AjaxResult getOnline() {
+        ArrayList<String> objects = new ArrayList<>();
+        objects.add("在线");
+        objects.add("离线");
         return AjaxResult.success(objects);
     }
 }

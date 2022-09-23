@@ -24,6 +24,7 @@ public interface TableMapper extends BaseMapper<Tables> {
 
 
     List<Tables> selectListByKeyWords(HashMap<String, Object> map);
+    List<Tables> getListByOrder(HashMap<String, Object> map);
 
     List<Tables> getListByCates(@Param("cateIds") List<Integer> cateIds);
 

@@ -63,4 +63,6 @@ public class Tables implements Serializable {
     @ApiModelProperty("所处环境——生产/测试")
     private String environment;
 
+    @ApiModelProperty("表时效——在线/离线")
+    private String aging;
 }

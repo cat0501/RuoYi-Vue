@@ -24,6 +24,7 @@ public interface ITableService extends IService<Tables> {
      * 根据关键词筛选数据表
      */
     List<Tables> getListByStr(HashMap<String, Object> map);
+    List<Tables> getListByOrder(HashMap<String, Object> map);
 
     /**
      * 公开 / 隐藏数据表
