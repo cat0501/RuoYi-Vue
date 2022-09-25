@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.platform;
 
+import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.paltform.Cate;
 import com.ruoyi.system.domain.paltform.Tables;
@@ -38,6 +39,7 @@ public class CateController {
         this.tableService = tableService;
     }
 
+    @Anonymous
     @ApiOperation("资产目录列表")
     @GetMapping("/cate/list")
     public AjaxResult getCateList() throws InstantiationException, IllegalAccessException {
