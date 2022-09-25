@@ -1,6 +1,5 @@
 package com.ruoyi.system.domain.paltform;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -16,7 +15,7 @@ import java.io.Serializable;
  * @description
  * @updateTime 2022/9/8 11:43
  */
-//@Data
+@Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("dsmp_all_tables")
@@ -35,7 +34,7 @@ public class Tables implements Serializable {
     private String tableDesc;
 
     @ApiModelProperty("资产管理人")
-    private String manager;
+    private String dept;
 
     @ApiModelProperty("创建时间")
     private String createTime;
@@ -55,102 +54,15 @@ public class Tables implements Serializable {
     @ApiModelProperty("表类型")
     private String tableType;
 
-    @ApiModelProperty("是否公开")
+    @ApiModelProperty("是否公开 0公开 1隐藏")
     private Integer isDeleted;
 
-    public Integer getId() {
-        return id;
-    }
+    @ApiModelProperty("0注销 1编目")
+    private Integer isCancel;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @ApiModelProperty("所处环境——生产/测试")
+    private String environment;
 
-    public String getDatabaseName() {
-        return databaseName;
-    }
-
-    public void setDatabaseName(String databaseName) {
-        this.databaseName = databaseName;
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public String getTableDesc() {
-        return tableDesc;
-    }
-
-    public void setTableDesc(String tableDesc) {
-        this.tableDesc = tableDesc;
-    }
-
-    public String getManager() {
-        return manager;
-    }
-
-    public void setManager(String manager) {
-        this.manager = manager;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Double getStorageSize() {
-        return storageSize;
-    }
-
-    public void setStorageSize(Double storageSize) {
-        this.storageSize = storageSize;
-    }
-
-    public Integer getCate() {
-        return cate;
-    }
-
-    public void setCate(Integer cate) {
-        this.cate = cate;
-    }
-
-    public String getAdministrator() {
-        return administrator;
-    }
-
-    public void setAdministrator(String administrator) {
-        this.administrator = administrator;
-    }
-
-    public String getTableType() {
-        return tableType;
-    }
-
-    public void setTableType(String tableType) {
-        this.tableType = tableType;
-    }
-
-    public Integer getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Integer isDeleted) {
-        this.isDeleted = isDeleted;
-    }
+    @ApiModelProperty("表时效——在线/离线")
+    private String aging;
 }

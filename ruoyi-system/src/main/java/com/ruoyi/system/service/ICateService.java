@@ -5,6 +5,7 @@ import com.ruoyi.system.domain.paltform.Cate;
 import com.ruoyi.system.domain.paltform.Tables;
 import com.ruoyi.system.domain.paltform.vo.CateInfoVO;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -15,9 +16,12 @@ import java.util.List;
 public interface ICateService extends IService<Cate> {
 
     /**
-     * 查看目录下的数据资产
+     * @description 查看目录下的数据资产
+     * @param cate 目录ID
+     * @param pageNum 当前页数
+     * @param pageSize 每页条数
      */
-    List<Tables> getTableListByCate(Integer cate);
+    List<Tables> getTableListByCate(Integer cate, Integer pageNum, Integer pageSize);
 
     /**
      * 新增资产目录

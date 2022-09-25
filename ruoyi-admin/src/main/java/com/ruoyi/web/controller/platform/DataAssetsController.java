@@ -2,6 +2,7 @@ package com.ruoyi.web.controller.platform;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.paltform.Cate;
 import com.ruoyi.system.domain.paltform.TableFieldInfo;
@@ -51,6 +52,7 @@ public class DataAssetsController {
         this.cateService = cateService;
     }
 
+    @Anonymous
     @ApiOperation("数据表详情")
     @GetMapping("/table/info")
     public AjaxResult getTableInfo(@RequestParam String tableName) {
@@ -83,6 +85,7 @@ public class DataAssetsController {
         return list;
     }
 
+    @Anonymous
     @ApiOperation("数据表资产管理——查看——表信息——编辑")
     // 数据表资产管理——编辑——表信息
     @PostMapping("/table/updateById")
@@ -101,6 +104,7 @@ public class DataAssetsController {
         return AjaxResult.success(tableService.openTableById(id, isDeleted));
     }
 
+    @Anonymous
     @ApiOperation("数据表资产管理——删除目录")
     @PostMapping("/table/deleteById")
     public AjaxResult deleteById(@RequestParam Integer id) {
@@ -136,16 +140,4 @@ public class DataAssetsController {
         return cateService.list(queryWrapper);
     }
 
-
-    // TODO
-    @ApiOperation("数据表资产管理——查看——字段信息——编辑")
-    @PostMapping("/table/updateFieldById")
-    public AjaxResult updateFieldById(@RequestParam String table_id,
-                                 @RequestParam List<FieldParam> table) {
-
-        UpdateWrapper<Tables> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("id", table_id);
-
-        return AjaxResult.success();
-    }
 }

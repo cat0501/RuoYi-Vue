@@ -3,6 +3,7 @@ package com.ruoyi.system.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.platform.PageQueryUtil;
 import com.ruoyi.system.domain.paltform.Tables;
+import com.ruoyi.system.domain.paltform.vo.SearchConditions;
 import com.ruoyi.system.mapper.TableMapper;
 import com.ruoyi.system.service.ITableService;
 import org.springframework.stereotype.Service;
@@ -25,25 +26,46 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Tables> implement
     }
 
     @Override
-    public List<Tables> getList(HashMap<String, Object> objectMap) {
-        return tableMapper.getList(objectMap);
+    public List<Tables> getList(HashMap<String, Object> objectMap, SearchConditions searchConditions) {
+        return tableMapper.getList(objectMap, searchConditions);
     }
 
     @Override
     public List<Tables> getListByStr(HashMap<String, Object> map) {
-        //Integer cate = (Integer) map.get("cate");
-        //String administrator = (String) map.get("administrator");
-
         return tableMapper.selectListByKeyWords(map);
     }
 
+    @Override
+    public List<Tables> getListByOrder(HashMap<String, Object> map) {
+        return tableMapper.getListByOrder(map);
+    }
+
+    /**
+     * 公开 / 隐藏数据表
+     */
     @Override
     public Void openTableById(Integer id, Integer isDeleted) {
         return tableMapper.openTableById(id, isDeleted);
     }
 
+    /**
+     * 公开 / 隐藏数据表（批量）
+     */
+    @Override
+    public void batchUpdateById(Integer[] ids, Integer status) {
+        tableMapper.batchUpdateById(ids, status);
+    }
+
+    /**
+     * 注销编目
+     */
     @Override
     public Void closeTableById(Integer id) {
         return tableMapper.closeTableById(id);
+    }
+
+    @Override
+    public int getTotal(int cateId) {
+        return tableMapper.getTotal(cateId);
     }
 }

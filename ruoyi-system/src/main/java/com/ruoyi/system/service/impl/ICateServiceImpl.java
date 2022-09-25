@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,14 +30,14 @@ public class ICateServiceImpl extends ServiceImpl<CateMapper, Cate> implements I
     CateMapper cateMapper;
 
     @Override
-    public List<Tables> getTableListByCate(Integer cate) {
-        // 获取所选目录 数据表
+    public List<Tables> getTableListByCate(Integer cate, Integer pageNum, Integer pageSize) {
+        // 获取所选目录的 数据表
         LambdaQueryWrapper<Tables> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Tables::getCate, cate);
         List<Tables> selectList = tableMapper.selectList(queryWrapper);
         List<Tables> tablesList = new ArrayList<>(selectList);
 
-        // 获取所选目录 数据表（子一级）
+        // 获取所选目录的 数据表（子一级）
         LambdaQueryWrapper<Cate> queryWrapper2 = new LambdaQueryWrapper<>();
         queryWrapper2.eq(Cate::getParentId, cate);
         List<Cate> cases = cateMapper.selectList(queryWrapper2);
@@ -47,7 +48,27 @@ public class ICateServiceImpl extends ServiceImpl<CateMapper, Cate> implements I
             tablesList.addAll(selectList2);
         }
 
-        return tablesList;
+        // 获取所选目录的 数据表（子二级）
+        if (cases.size() > 0){
+            List<Integer> ids = new ArrayList<>();
+            for (Cate aCase : cases) {
+                LambdaQueryWrapper<Cate> queryWrapper3 = new LambdaQueryWrapper<>();
+                queryWrapper3.eq(Cate::getParentId, aCase.getId());
+                List<Cate> cateList = cateMapper.selectList(queryWrapper3);
+                List<Integer> ids1 = cateList.stream().map(Cate::getId).collect(Collectors.toList());
+                ids.addAll(ids1);
+            }
+            if (ids.size() > 0) {
+                List<Tables> tableListByCates = tableMapper.getListByCates(ids);
+                tablesList.addAll(tableListByCates);
+            }
+        }
+        // 如果不分页
+        if (pageNum == null || pageSize == null){
+            return tablesList;
+        }
+        // 如果分页
+        return tablesList.stream().skip((long) (pageNum - 1) * pageSize).limit(pageSize).collect(Collectors.toList());
     }
 
     @Override
