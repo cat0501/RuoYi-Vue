@@ -101,7 +101,8 @@ public class DataAssetsController {
     @PostMapping("/table/openTableById")
     public AjaxResult openTableById(@RequestParam Integer id,
                                  @RequestParam Integer isDeleted) {
-        return AjaxResult.success(tableService.openTableById(id, isDeleted));
+        tableService.openTableById(id, isDeleted);
+        return AjaxResult.success();
     }
 
     @Anonymous

@@ -146,8 +146,8 @@ public class CateController extends BaseController {
     @ApiOperation("数据表资产管理——注销编目")
     @PostMapping("/table/closeTableById")
     public AjaxResult closeTableById(@RequestParam Integer id) {
-
-        return AjaxResult.success(tableService.closeTableById(id));
+        tableService.closeTableById(id);
+        return AjaxResult.success();
     }
 
     @ApiOperation("时间格式修改")

@@ -121,7 +121,7 @@ public class DataMapController extends BaseController {
 
     @Anonymous
     @ApiOperation("数据表批量公开/隐藏")
-    @PutMapping("/table/open/batch")
+    @PostMapping("/table/open/batch")
     public AjaxResult batchOpenOr(Integer[] ids, Integer status){
 
         tableService.batchUpdateById(ids, status);

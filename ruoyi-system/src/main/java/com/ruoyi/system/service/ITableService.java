@@ -29,7 +29,7 @@ public interface ITableService extends IService<Tables> {
     /**
      * 公开 / 隐藏数据表
      */
-    Void openTableById(Integer id, Integer isDeleted);
+    void openTableById(Integer id, Integer isDeleted);
 
     /**
      * 公开 / 隐藏数据表（批量）
@@ -39,9 +39,11 @@ public interface ITableService extends IService<Tables> {
     /**
      * 注销编目
      */
-    Void closeTableById(Integer id);
+    void closeTableById(Integer id);
 
-    // 获取数据表总数
+    /**
+     * 获取数据表总数
+     */
     int getTotal(int cateId);
 
 }
