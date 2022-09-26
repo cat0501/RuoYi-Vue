@@ -1,7 +1,11 @@
 package com.ruoyi.web.controller.platform;
 
+<<<<<<< HEAD
+import com.ruoyi.common.annotation.Anonymous;
+=======
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoyi.common.core.controller.BaseController;
+>>>>>>> 3ac8090dd738de7c9708172c72bf3562ae276b99
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.paltform.Cate;
 import com.ruoyi.system.domain.paltform.Tables;
@@ -44,6 +48,7 @@ public class CateController extends BaseController {
         this.tableService = tableService;
     }
 
+    @Anonymous
     @ApiOperation("资产目录列表")
     @GetMapping("/cate/list")
     public AjaxResult getCateList() {
