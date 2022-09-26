@@ -45,6 +45,7 @@ public class BoxController {
         ArrayList<String> objects = new ArrayList<>();
         objects.add("admin1");
         objects.add("admin2");
+        objects.add("root");
         return AjaxResult.success(objects);
     }
 

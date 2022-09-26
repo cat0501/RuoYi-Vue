@@ -68,11 +68,11 @@ public class DataMapController extends BaseController {
 
     @Anonymous
     @ApiOperation("根据关键词检索数据表、筛选——分页")
-    @PostMapping("/table/search")
+    @GetMapping("/table/search")
     public TableDataInfo search(@RequestParam(required = false) @ApiParam(value = "搜索关键字") String keyWords,
                                 @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNum,
                                 @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
-                                @RequestBody(required = false) SearchConditions searchConditions) {
+                                SearchConditions searchConditions) {
         log.info("----------------------------------->" + searchConditions);
 
         HashMap<String, Object> objectMap = getPage(pageNum, pageSize);
@@ -83,6 +83,7 @@ public class DataMapController extends BaseController {
             } else {
                 objectMap.put("keyWords", "");
             }
+            startPage();
             return getDataTable(tableService.getListByOrder(objectMap));
         }
 
@@ -106,6 +107,7 @@ public class DataMapController extends BaseController {
 
         if ((searchConditions.getCreateTime() == null || searchConditions.getUpdateTime() == null)) {
             objectMap.put("keyWords", keyWords);
+            startPage();
             return getDataTable(tableService.getListByStr(objectMap));
         }
 
@@ -114,6 +116,7 @@ public class DataMapController extends BaseController {
         } else {
             objectMap.put("keyWords", "");
         }
+        startPage();
         List<Tables> tablesList = tableService.getListByOrder(objectMap);
 
         return getDataTable(tablesList);

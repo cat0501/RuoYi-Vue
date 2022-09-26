@@ -75,14 +75,18 @@
     <select id="selectListByKeyWords" parameterType="Map" resultType="com.ruoyi.system.domain.paltform.Tables">
         SELECT <include refid="Base_Column_List"/>
         FROM dsmp_all_tables
-        WHERE table_name LIKE CONCAT('%', #{keyWords}, '%')
-           OR table_desc LIKE CONCAT('%', #{keyWords}, '%')
-        <if test="cate!=null and cate!=''">
-            and cate = #{cate}
-        </if>
-        <if test="administrator!=null and administrator!=''">
-            and administrator = #{administrator}
-        </if>
+        <where>
+            <if test="keyWords!=null and keyWords!=''">
+                and table_name LIKE CONCAT('%', #{keyWords}, '%')
+                OR table_desc LIKE CONCAT('%', #{keyWords}, '%')
+            </if>
+            <if test="cate!=null and cate!=''">
+                and cate = #{cate}
+            </if>
+            <if test="administrator!=null and administrator!=''">
+                and administrator = #{administrator}
+            </if>
+        </where>
         ORDER BY LENGTH(substring_index(table_desc, #{keyWords}, 1)),
                  LENGTH(table_desc)
                  <if test="updateTime='desc'">
@@ -91,20 +95,23 @@
                 <if test="createTime='desc'">
                      , create_time desc
                 </if>
-        LIMIT #{start},#{limit}
     </select>
 
     <select id="getListByOrder" parameterType="Map" resultType="com.ruoyi.system.domain.paltform.Tables">
         SELECT <include refid="Base_Column_List"/>
         FROM dsmp_all_tables
-        WHERE table_name LIKE CONCAT('%', #{keyWords}, '%')
-        OR table_desc LIKE CONCAT('%', #{keyWords}, '%')
-        <if test="cate!=null and cate!=''">
-            and cate = #{cate}
-        </if>
-        <if test="administrator!=null and administrator!=''">
-            and administrator = #{administrator}
-        </if>
+        <where>
+            <if test="keyWords!=null and keyWords!=''">
+                and table_name LIKE CONCAT('%', #{keyWords}, '%')
+                OR table_desc LIKE CONCAT('%', #{keyWords}, '%')
+            </if>
+            <if test="cate!=null and cate!=''">
+                and cate = #{cate}
+            </if>
+            <if test="administrator!=null and administrator!=''">
+                and administrator = #{administrator}
+            </if>
+        </where>
         ORDER BY
         <if test="updateTime=='desc'">
             update_time desc,
@@ -120,7 +127,6 @@
         </if>
         LENGTH(substring_index(table_desc, #{keyWords}, 1)),
         LENGTH(table_desc)
-        LIMIT #{start},#{limit}
     </select>
 
     <select id="getListByCates" resultType="com.ruoyi.system.domain.paltform.Tables">

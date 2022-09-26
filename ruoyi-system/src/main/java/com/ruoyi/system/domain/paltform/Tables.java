@@ -33,7 +33,7 @@ public class Tables implements Serializable {
     @ApiModelProperty("表描述")
     private String tableDesc;
 
-    @ApiModelProperty("资产管理人")
+    @ApiModelProperty("所属部门")
     private String dept;
 
     @ApiModelProperty("创建时间")

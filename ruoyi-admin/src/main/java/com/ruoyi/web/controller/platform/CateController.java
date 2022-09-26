@@ -1,11 +1,8 @@
 package com.ruoyi.web.controller.platform;
 
-<<<<<<< HEAD
 import com.ruoyi.common.annotation.Anonymous;
-=======
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoyi.common.core.controller.BaseController;
->>>>>>> 3ac8090dd738de7c9708172c72bf3562ae276b99
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.paltform.Cate;
 import com.ruoyi.system.domain.paltform.Tables;
@@ -187,5 +184,44 @@ public class CateController extends BaseController {
     //    String str = sdf.format(Date.parse("Thu Jul 22 23:58:32 CST 2010"));
     //    System.out.println(str);
     //}
+
+    @Anonymous
+    @ApiOperation("资产目录列表——带根目录")
+    @GetMapping("/cate/getCateListAll")
+    public AjaxResult getCateListAll() {
+        List<Cate> cateList = cateService.list(null);
+        List<CateVO> vo = getCategories(cateList, 0);
+        List<CateVO> vos = getCategories(cateList, 1);
+        List<CateVO> sos = getCategories(cateList, 2);
+        List<CateVO> tos = getCategories(cateList, 3);
+
+        setNextLevel(vo, vos);
+        setNextLevel(vos, sos);
+        setNextLevel(sos, tos);
+
+        // 总数据表数量
+        int sumTotal = 0;
+        for (CateVO cateVO : vos) {
+            int total = cateService.getTableListByCate(cateVO.getId(), null, null).size();
+            sumTotal += total;
+
+            cateVO.setTotal(total);
+        }
+        vo.get(0).setTotal(sumTotal);
+
+        for (CateVO cateVO : sos) {
+            cateVO.setTotal(cateService.getTableListByCate(cateVO.getId(), null, null).size());
+        }
+        for (CateVO cateVO : tos) {
+            cateVO.setTotal(cateService.getTableListByCate(cateVO.getId(), null, null).size());
+        }
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("data", vo);
+
+        map.put("total", sumTotal);
+
+        return AjaxResult.success(map);
+    }
 
 }
