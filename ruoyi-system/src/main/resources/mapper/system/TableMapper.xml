@@ -80,7 +80,7 @@
                 and table_name LIKE CONCAT('%', #{keyWords}, '%')
                 OR table_desc LIKE CONCAT('%', #{keyWords}, '%')
             </if>
-            <if test="cate!=null and cate!=''">
+            <if test="cate!=null and cate!=''and cate!=1000">
                 and cate = #{cate}
             </if>
             <if test="administrator!=null and administrator!=''">
@@ -89,11 +89,17 @@
         </where>
         ORDER BY LENGTH(substring_index(table_desc, #{keyWords}, 1)),
                  LENGTH(table_desc)
-                 <if test="updateTime='desc'">
-                     , update_time desc
-                 </if>
-                <if test="createTime='desc'">
-                     , create_time desc
+                <if test='updateTime=="asc"'>
+                    , update_time asc
+                </if>
+                <if test='updateTime=="desc"'>
+                    , update_time desc
+                </if>
+                <if test='createTime=="asc"'>
+                    , create_time asc
+                </if>
+                <if test='createTime=="desc"'>
+                    , create_time desc
                 </if>
     </select>
 
@@ -105,7 +111,7 @@
                 and table_name LIKE CONCAT('%', #{keyWords}, '%')
                 OR table_desc LIKE CONCAT('%', #{keyWords}, '%')
             </if>
-            <if test="cate!=null and cate!=''">
+            <if test="cate!=null and cate!=''and cate!=1000">
                 and cate = #{cate}
             </if>
             <if test="administrator!=null and administrator!=''">

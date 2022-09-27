@@ -8,6 +8,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.system.domain.paltform.TableFieldInfo;
 import com.ruoyi.system.domain.paltform.Tables;
+import com.ruoyi.system.domain.paltform.vo.FieldVO;
 import com.ruoyi.system.domain.paltform.vo.SearchConditions;
 import com.ruoyi.system.domain.paltform.vo.TableFieldInfoVO;
 import com.ruoyi.system.service.ITableInfoService;
@@ -110,7 +111,7 @@ public class DataMapController extends BaseController {
             startPage();
             return getDataTable(tableService.getListByStr(objectMap));
         }
-
+        //objectMap.put("keyWords", StringUtils.isNotBlank(keyWords) ? keyWords : "");
         if (StringUtils.isNotBlank(keyWords)){
             objectMap.put("keyWords", keyWords);
         } else {
@@ -138,7 +139,11 @@ public class DataMapController extends BaseController {
     @ApiOperation("数据表字段——修改")
     @PutMapping("/table/field/update")
     @Transactional
-    public AjaxResult updateTableField(@RequestBody List<TableFieldInfoVO> tableField, @RequestParam String tableName){
+    //public AjaxResult updateTableField(@RequestBody List<TableFieldInfoVO> tableField, @RequestParam String tableName){
+    public AjaxResult updateTableField(@RequestBody FieldVO fieldVO){
+
+        String tableName = fieldVO.getTableName();
+        List<TableFieldInfoVO> tableField = fieldVO.getTableFieldInfoVOs();
         // 查询库表信息
         LambdaQueryWrapper<Tables> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Tables::getTableName, tableName);
@@ -166,6 +171,21 @@ public class DataMapController extends BaseController {
 
         return AjaxResult.success();
     }
+
+    //@Anonymous
+    //@ApiOperation("数据表字段——修改")
+    //@PutMapping("/table/test")
+    //@Transactional
+    //public AjaxResult test(@RequestBody FieldVO fieldVO){
+    //    System.out.println(fieldVO.getTableName());
+    //    System.out.println("------------------------------>");
+    //
+    //    List<TableFieldInfoVO> tableFieldInfoVOs = fieldVO.getTableFieldInfoVOs();
+    //    for (TableFieldInfoVO tableFieldInfoVO : tableFieldInfoVOs) {
+    //        System.out.println(tableFieldInfoVO);
+    //    }
+    //    return AjaxResult.success();
+    //}
 
 
 }

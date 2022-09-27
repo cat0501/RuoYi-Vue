@@ -121,6 +121,10 @@ public class CateController extends BaseController {
     @PostMapping("/cate/add")
     public AjaxResult addCate(@RequestBody Cate cate){
         if (cate != null){
+            cate.setIsDeleted(0);
+
+            Integer cateLevel = cateService.getById(cate.getParentId()).getCateLevel() + 1;
+            cate.setCateLevel(cateLevel);
             cateService.addCate(cate);
         }
         return AjaxResult.success();
@@ -185,17 +189,16 @@ public class CateController extends BaseController {
     //    System.out.println(str);
     //}
 
+
     @Anonymous
     @ApiOperation("资产目录列表——带根目录")
     @GetMapping("/cate/getCateListAll")
     public AjaxResult getCateListAll() {
         List<Cate> cateList = cateService.list(null);
-        List<CateVO> vo = getCategories(cateList, 0);
         List<CateVO> vos = getCategories(cateList, 1);
         List<CateVO> sos = getCategories(cateList, 2);
         List<CateVO> tos = getCategories(cateList, 3);
 
-        setNextLevel(vo, vos);
         setNextLevel(vos, sos);
         setNextLevel(sos, tos);
 
@@ -207,7 +210,6 @@ public class CateController extends BaseController {
 
             cateVO.setTotal(total);
         }
-        vo.get(0).setTotal(sumTotal);
 
         for (CateVO cateVO : sos) {
             cateVO.setTotal(cateService.getTableListByCate(cateVO.getId(), null, null).size());
@@ -216,12 +218,61 @@ public class CateController extends BaseController {
             cateVO.setTotal(cateService.getTableListByCate(cateVO.getId(), null, null).size());
         }
 
+        CateVO cateVO = new CateVO();
+        cateVO.setId(1000);
+        cateVO.setCateName("根目录");
+        cateVO.setCateLevel(0);
+        cateVO.setParentId(0);
+        cateVO.setTotal(sumTotal);
+        vos.add(cateVO);
+
         HashMap<String, Object> map = new HashMap<>();
-        map.put("data", vo);
+        map.put("data", vos);
 
         map.put("total", sumTotal);
 
         return AjaxResult.success(map);
     }
+
+
+
+    //@Anonymous
+    //@ApiOperation("资产目录列表——带根目录")
+    //@GetMapping("/cate/getCateListAll")
+    //public AjaxResult getCateListAll() {
+    //    List<Cate> cateList = cateService.list(null);
+    //    List<CateVO> vo = getCategories(cateList, 0);
+    //    List<CateVO> vos = getCategories(cateList, 1);
+    //    List<CateVO> sos = getCategories(cateList, 2);
+    //    List<CateVO> tos = getCategories(cateList, 3);
+    //
+    //    setNextLevel(vo, vos);
+    //    setNextLevel(vos, sos);
+    //    setNextLevel(sos, tos);
+    //
+    //    // 总数据表数量
+    //    int sumTotal = 0;
+    //    for (CateVO cateVO : vos) {
+    //        int total = cateService.getTableListByCate(cateVO.getId(), null, null).size();
+    //        sumTotal += total;
+    //
+    //        cateVO.setTotal(total);
+    //    }
+    //    vo.get(0).setTotal(sumTotal);
+    //
+    //    for (CateVO cateVO : sos) {
+    //        cateVO.setTotal(cateService.getTableListByCate(cateVO.getId(), null, null).size());
+    //    }
+    //    for (CateVO cateVO : tos) {
+    //        cateVO.setTotal(cateService.getTableListByCate(cateVO.getId(), null, null).size());
+    //    }
+    //
+    //    HashMap<String, Object> map = new HashMap<>();
+    //    map.put("data", vo);
+    //
+    //    map.put("total", sumTotal);
+    //
+    //    return AjaxResult.success(map);
+    //}
 
 }

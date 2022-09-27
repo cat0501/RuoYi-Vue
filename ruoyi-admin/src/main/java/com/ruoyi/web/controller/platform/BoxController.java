@@ -57,4 +57,20 @@ public class BoxController {
         objects.add("离线");
         return AjaxResult.success(objects);
     }
+
+
+    //
+    @ApiOperation("字段类型")
+    @GetMapping("/cate/fieldType")
+    public AjaxResult getFieldType() {
+        ArrayList<String> objects = new ArrayList<>();
+        objects.add("Integer");
+        objects.add("Long");
+        objects.add("String");
+        objects.add("Float");
+        objects.add("Double");
+        objects.add("Boolean");
+        return AjaxResult.success(objects);
+    }
+
 }

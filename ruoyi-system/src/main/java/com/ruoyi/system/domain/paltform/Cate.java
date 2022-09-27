@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain.paltform;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,7 +19,7 @@ import lombok.experimental.Accessors;
 @TableName("dsmp_cate")
 public class Cate {
 
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty("目录名称")
