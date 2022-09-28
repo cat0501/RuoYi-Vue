@@ -32,4 +32,7 @@ public interface ICateService extends IService<Cate> {
      * 查看目录信息
      */
     CateInfoVO getCateInfo(Integer cateId);
+
+    void updateCate(Cate cate);
+
 }

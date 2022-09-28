@@ -15,12 +15,14 @@
         <result column="cate"           jdbcType="INTEGER"      property="cate"/>
         <result column="administrator"  jdbcType="VARCHAR"      property="administrator"/>
         <result column="is_deleted"     jdbcType="INTEGER"      property="isDeleted"/>
+        <result column="is_cancel"     jdbcType="INTEGER"      property="isCancel"/>
         <result column="table_type"     jdbcType="VARCHAR"      property="tableType"/>
         <result column="aging"          jdbcType="VARCHAR"           property="aging"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, database_name, table_name, table_desc, dept, create_time,  update_time, storage_size, is_deleted, cate, administrator,aging
+        id, database_name, table_name, table_desc, dept,
+        create_time,  update_time, storage_size, is_deleted, is_cancel, cate, administrator,aging
     </sql>
 
     <update id="openTableById">
@@ -34,7 +36,7 @@
     <update id="closeTableById">
         update dsmp_all_tables
         <set>
-            is_cancel = 0,
+            cate = 0,
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>

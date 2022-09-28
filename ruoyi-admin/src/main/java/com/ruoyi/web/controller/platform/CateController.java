@@ -7,15 +7,16 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.paltform.Cate;
 import com.ruoyi.system.domain.paltform.Tables;
 import com.ruoyi.system.domain.paltform.vo.CateInfoVO;
+import com.ruoyi.system.domain.paltform.vo.CateParamPO;
 import com.ruoyi.system.domain.paltform.vo.CateVO;
 import com.ruoyi.system.service.ICateService;
 import com.ruoyi.system.service.ITableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -106,7 +107,7 @@ public class CateController extends BaseController {
         return vos;
     }
 
-
+    @Anonymous
     @ApiOperation("查看目录下的数据资产——分页")
     @GetMapping("/cate/getTableListByCate")
     public AjaxResult getTableListByCate(Integer cate,
@@ -117,6 +118,7 @@ public class CateController extends BaseController {
         return AjaxResult.success(tableListByCate);
     }
 
+    @Anonymous
     @ApiOperation("新增资产目录")
     @PostMapping("/cate/add")
     public AjaxResult addCate(@RequestBody Cate cate){
@@ -130,6 +132,17 @@ public class CateController extends BaseController {
         return AjaxResult.success();
     }
 
+    @Anonymous
+    @ApiOperation("编辑资产目录")
+    @PostMapping("/cate/update")
+    @Transactional
+    public AjaxResult updateCate(@RequestBody Cate cate){
+        log.info("cate---------------------------------->" + cate.toString());
+
+        cateService.updateCate(cate);
+        return AjaxResult.success();
+    }
+
     @ApiOperation("查看目录信息")
     @GetMapping("/cate/getCateInfo")
     public AjaxResult getCateInfo(Integer cateId){
@@ -140,7 +153,11 @@ public class CateController extends BaseController {
 
     @ApiOperation("资产目录管理——新增编目")
     @PutMapping("/cate/putCate")
-    public AjaxResult putCate(@RequestParam Integer id, @RequestParam Integer cateId){
+    //public AjaxResult putCate(@RequestParam Integer id, @RequestParam Integer cateId){
+    public AjaxResult putCate(@RequestBody CateParamPO cateParam){
+        Integer id = cateParam.getId();
+        Integer cateId = cateParam.getCateId();
+
         Tables tables = tableService.getById(id);
         tables.setCate(cateId);
         tables.setIsCancel(1);
@@ -233,46 +250,5 @@ public class CateController extends BaseController {
 
         return AjaxResult.success(map);
     }
-
-
-
-    //@Anonymous
-    //@ApiOperation("资产目录列表——带根目录")
-    //@GetMapping("/cate/getCateListAll")
-    //public AjaxResult getCateListAll() {
-    //    List<Cate> cateList = cateService.list(null);
-    //    List<CateVO> vo = getCategories(cateList, 0);
-    //    List<CateVO> vos = getCategories(cateList, 1);
-    //    List<CateVO> sos = getCategories(cateList, 2);
-    //    List<CateVO> tos = getCategories(cateList, 3);
-    //
-    //    setNextLevel(vo, vos);
-    //    setNextLevel(vos, sos);
-    //    setNextLevel(sos, tos);
-    //
-    //    // 总数据表数量
-    //    int sumTotal = 0;
-    //    for (CateVO cateVO : vos) {
-    //        int total = cateService.getTableListByCate(cateVO.getId(), null, null).size();
-    //        sumTotal += total;
-    //
-    //        cateVO.setTotal(total);
-    //    }
-    //    vo.get(0).setTotal(sumTotal);
-    //
-    //    for (CateVO cateVO : sos) {
-    //        cateVO.setTotal(cateService.getTableListByCate(cateVO.getId(), null, null).size());
-    //    }
-    //    for (CateVO cateVO : tos) {
-    //        cateVO.setTotal(cateService.getTableListByCate(cateVO.getId(), null, null).size());
-    //    }
-    //
-    //    HashMap<String, Object> map = new HashMap<>();
-    //    map.put("data", vo);
-    //
-    //    map.put("total", sumTotal);
-    //
-    //    return AjaxResult.success(map);
-    //}
 
 }

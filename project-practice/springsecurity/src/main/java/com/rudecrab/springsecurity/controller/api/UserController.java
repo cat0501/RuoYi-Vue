@@ -53,7 +53,7 @@ public class UserController {
         return "操作成功";
     }
 
-    @PutMapping
+
     @Auth(id = 3, name = "编辑用户")
     public String updateRoles(@RequestBody @Validated(UserParam.Update.class) UserParam param) {
         userService.update(param);

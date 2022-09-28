@@ -3,6 +3,7 @@ package com.ruoyi.system.domain.paltform;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +18,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("dsmp_cate")
+@ApiModel(value = "Cate", description = "目录")
 public class Cate {
 
     @TableId(type = IdType.AUTO)
@@ -48,4 +50,5 @@ public class Cate {
 
     @ApiModelProperty("创建人")
     private String author;
+
 }
