@@ -1,9 +1,12 @@
 package com.ruoyi.web.controller.platform;
 
+import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.annotation.Anonymous;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.ruoyi.common.constant.HttpStatus;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.paltform.Cate;
 import com.ruoyi.system.domain.paltform.Tables;
 import com.ruoyi.system.domain.paltform.vo.CateInfoVO;
@@ -110,12 +113,23 @@ public class CateController extends BaseController {
     @Anonymous
     @ApiOperation("查看目录下的数据资产——分页")
     @GetMapping("/cate/getTableListByCate")
-    public AjaxResult getTableListByCate(Integer cate,
-                                         @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNum,
-                                         @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize) {
+    public TableDataInfo getTableListByCate(Integer cate,
+                                            @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNum,
+                                            @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize) {
         //startPage(); // 此方法配合前端完成自动分页
         List<Tables> tableListByCate = cateService.getTableListByCate(cate, pageNum, pageSize);
-        return AjaxResult.success(tableListByCate);
+        //return AjaxResult.success(tableListByCate);
+        TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(HttpStatus.SUCCESS);
+        rspData.setMsg("查询成功");
+        rspData.setRows(tableListByCate.stream()
+                        .skip((long) (pageNum - 1) * pageSize)
+                        .limit(pageSize)
+                        .collect(Collectors.toList()));
+        rspData.setTotal(tableListByCate.size());
+        return rspData;
+
+        //return getDataTable(tableListByCate);
     }
 
     @Anonymous
