@@ -66,6 +66,8 @@
   </div>
 </template>
 
+
+
 <script>
 import { getCache } from "@/api/monitor/cache";
 import echarts from "echarts";

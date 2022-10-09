@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.platform;
 
-import com.github.pagehelper.PageInfo;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.ruoyi.common.annotation.Anonymous;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoyi.common.constant.HttpStatus;

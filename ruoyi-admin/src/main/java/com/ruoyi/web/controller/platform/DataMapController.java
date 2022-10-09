@@ -73,7 +73,7 @@ public class DataMapController extends BaseController {
     public TableDataInfo search(@RequestParam(required = false) @ApiParam(value = "搜索关键字") String keyWords,
                                 @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNum,
                                 @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
-                                SearchConditions searchConditions) {
+                                SearchConditions searchConditions) {    
         log.info("----------------------------------->" + searchConditions);
 
         HashMap<String, Object> objectMap = getPage(pageNum, pageSize);
