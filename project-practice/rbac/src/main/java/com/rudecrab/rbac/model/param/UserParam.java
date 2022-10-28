@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 public class UserParam {
     @NotNull(message = "用户id不能为空", groups = Update.class)
-    private Long id;
+    private Long ;
 
     @NotBlank(message = "用户名不能为空", groups = CreateUser.class)
     @Length(min = 4, max = 12, message = "用户名长度为4-12位", groups = CreateUser.class)

@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 public class RoleParam {
     @NotNull(message = "角色id不能为空", groups = UpdateResources.class)
-    private Long id;
+    private Long ;
 
     @NotBlank(message = "管理员名称不能为空", groups = CreateRole.class)
     @Length(min = 1, max = 12, message = "用户名长度不能超过12位", groups = CreateRole.class)

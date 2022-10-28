@@ -15,5 +15,5 @@ public abstract class BaseEntity {
      * 主键
      */
     @TableId(type = IdType.AUTO)
-    private Long id;
+    private Long ;
 }

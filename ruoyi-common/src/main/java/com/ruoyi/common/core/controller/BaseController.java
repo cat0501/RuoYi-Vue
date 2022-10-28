@@ -90,7 +90,7 @@ public class BaseController {
     }
 
     /**
-     * 返回失败消息
+     * 返回失败
      */
     public AjaxResult error() {
         return AjaxResult.error();

@@ -17,14 +17,10 @@ public class SecurityUtils
     /**
      * 用户ID
      **/
-    public static Long getUserId()
-    {
-        try
-        {
+    public static Long getUserId() {
+        try {
             return getLoginUser().getUserId();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new ServiceException("获取用户ID异常", HttpStatus.UNAUTHORIZED);
         }
     }
@@ -62,14 +58,10 @@ public class SecurityUtils
     /**
      * 获取用户
      **/
-    public static LoginUser getLoginUser()
-    {
-        try
-        {
+    public static LoginUser getLoginUser() {
+        try {
             return (LoginUser) getAuthentication().getPrincipal();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new ServiceException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
         }
     }
@@ -77,8 +69,7 @@ public class SecurityUtils
     /**
      * 获取Authentication
      */
-    public static Authentication getAuthentication()
-    {
+    public static Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 

@@ -28,11 +28,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-/**
- * @author Lemonade
- * @description
- * @updateTime 2022/9/15 10:38
- */
 @Api("数据资产管理")
 @Slf4j
 @RestController
