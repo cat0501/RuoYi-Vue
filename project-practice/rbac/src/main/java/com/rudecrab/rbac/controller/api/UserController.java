@@ -71,7 +71,7 @@ public class UserController {
         return resourceService.getIdsByUserId(userId);
     }
 
-    @Auth(id = 4,name = "用于演示路径参数")
+    @Auth( = 4,name = "用于演示路径参数")
     @GetMapping("/test/{id}")
     public String testInterface(@PathVariable("id") String id) {
         return "测试";

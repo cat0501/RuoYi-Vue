@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.ruoyi.common.utils.PageUtils.startPage;
+
 /**
  * @author Lemonade
  * @description
@@ -68,7 +70,11 @@ public class ICateServiceImpl extends ServiceImpl<CateMapper, Cate> implements I
             return tablesList;
         }
         // 如果分页
-        return tablesList.stream().skip((long) (pageNum - 1) * pageSize).limit(pageSize).collect(Collectors.toList());
+        return tablesList;
+        //return tablesList.stream()
+        //        .skip((long) (pageNum - 1) * pageSize)
+        //        .limit(pageSize)
+        //        .collect(Collectors.toList());
     }
 
     @Override
@@ -113,5 +119,10 @@ public class ICateServiceImpl extends ServiceImpl<CateMapper, Cate> implements I
         tableTotal = listByCates.size();
         cateInfoVO.setTableTotal(tableTotal);
         return cateInfoVO;
+    }
+
+    @Override
+    public void updateCate(Cate cate) {
+        cateMapper.updateCate(cate);
     }
 }

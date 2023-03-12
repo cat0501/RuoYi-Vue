@@ -1,7 +1,6 @@
 package com.ruoyi.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ruoyi.common.platform.PageQueryUtil;
 import com.ruoyi.system.domain.paltform.Tables;
 import com.ruoyi.system.domain.paltform.vo.SearchConditions;
 import com.ruoyi.system.mapper.TableMapper;
@@ -44,8 +43,8 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Tables> implement
      * 公开 / 隐藏数据表
      */
     @Override
-    public Void openTableById(Integer id, Integer isDeleted) {
-        return tableMapper.openTableById(id, isDeleted);
+    public void openTableById(Integer id, Integer isDeleted) {
+        tableMapper.openTableById(id, isDeleted);
     }
 
     /**
@@ -60,8 +59,8 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Tables> implement
      * 注销编目
      */
     @Override
-    public Void closeTableById(Integer id) {
-        return tableMapper.closeTableById(id);
+    public void closeTableById(Integer id) {
+        tableMapper.closeTableById(id);
     }
 
     @Override

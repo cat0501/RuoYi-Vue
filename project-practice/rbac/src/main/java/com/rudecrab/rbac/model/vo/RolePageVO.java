@@ -11,7 +11,7 @@ import java.util.Set;
  */
 @Data
 public class RolePageVO {
-    private Long id;
+    private Long ;
     private String name;
     private Set<Long> resourceIds;
 }

@@ -14,7 +14,7 @@ public class UserVO {
     /**
      * 主键
      */
-    private Long id;
+    private Long ;
     /**
      * 用户名
      */

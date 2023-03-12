@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.job.mapper.MallGoodsCategoryMapper">
+    
+    <resultMap type="MallGoodsCategory" id="MallGoodsCategoryResult">
+        <result property="categoryId"    column="category_id"    />
+        <result property="categoryLevel"    column="category_level"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="categoryName"    column="category_name"    />
+        <result property="categoryRank"    column="category_rank"    />
+        <result property="isDeleted"    column="is_deleted"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateUser"    column="update_user"    />
+        <result property="img"    column="img"    />
+    </resultMap>
+
+    <sql id="selectMallGoodsCategoryVo">
+        select category_id, category_level, parent_id, category_name, category_rank, is_deleted, create_time, create_user, update_time, update_user, img from mall_goods_category
+    </sql>
+
+    <select id="selectMallGoodsCategoryList" parameterType="MallGoodsCategory" resultMap="MallGoodsCategoryResult">
+        <include refid="selectMallGoodsCategoryVo"/>
+        <where>  
+            <if test="categoryLevel != null "> and category_level = #{categoryLevel}</if>
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="categoryName != null  and categoryName != ''"> and category_name like concat('%', #{categoryName}, '%')</if>
+            <if test="categoryRank != null "> and category_rank = #{categoryRank}</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
+            <if test="createUser != null "> and create_user = #{createUser}</if>
+            <if test="updateUser != null "> and update_user = #{updateUser}</if>
+            <if test="img != null  and img != ''"> and img = #{img}</if>
+        </where>
+    </select>
+    
+    <select id="selectMallGoodsCategoryByCategoryId" parameterType="Long" resultMap="MallGoodsCategoryResult">
+        <include refid="selectMallGoodsCategoryVo"/>
+        where category_id = #{categoryId}
+    </select>
+        
+    <insert id="insertMallGoodsCategory" parameterType="MallGoodsCategory" useGeneratedKeys="true" keyProperty="categoryId">
+        insert into mall_goods_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="categoryLevel != null">category_level,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="categoryName != null and categoryName != ''">category_name,</if>
+            <if test="categoryRank != null">category_rank,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="img != null">img,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="categoryLevel != null">#{categoryLevel},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="categoryName != null and categoryName != ''">#{categoryName},</if>
+            <if test="categoryRank != null">#{categoryRank},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateUser != null">#{updateUser},</if>
+            <if test="img != null">#{img},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMallGoodsCategory" parameterType="MallGoodsCategory">
+        update mall_goods_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryLevel != null">category_level = #{categoryLevel},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="categoryName != null and categoryName != ''">category_name = #{categoryName},</if>
+            <if test="categoryRank != null">category_rank = #{categoryRank},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="img != null">img = #{img},</if>
+        </trim>
+        where category_id = #{categoryId}
+    </update>
+
+    <delete id="deleteMallGoodsCategoryByCategoryId" parameterType="Long">
+        delete from mall_goods_category where category_id = #{categoryId}
+    </delete>
+
+    <delete id="deleteMallGoodsCategoryByCategoryIds" parameterType="String">
+        delete from mall_goods_category where category_id in 
+        <foreach item="categoryId" collection="array" open="(" separator="," close=")">
+            #{categoryId}
+        </foreach>
+    </delete>
+</mapper>

@@ -28,11 +28,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-/**
- * @author Lemonade
- * @description
- * @updateTime 2022/9/15 10:38
- */
 @Api("数据资产管理")
 @Slf4j
 @RestController
@@ -101,7 +96,8 @@ public class DataAssetsController {
     @PostMapping("/table/openTableById")
     public AjaxResult openTableById(@RequestParam Integer id,
                                  @RequestParam Integer isDeleted) {
-        return AjaxResult.success(tableService.openTableById(id, isDeleted));
+        tableService.openTableById(id, isDeleted);
+        return AjaxResult.success();
     }
 
     @Anonymous

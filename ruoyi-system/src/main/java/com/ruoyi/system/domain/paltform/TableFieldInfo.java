@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain.paltform;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
@@ -21,7 +22,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @TableName("dsmp_table_field_info")
 public class TableFieldInfo implements Serializable {
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty("库名称")

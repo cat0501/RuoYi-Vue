@@ -8,6 +8,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.system.domain.paltform.TableFieldInfo;
 import com.ruoyi.system.domain.paltform.Tables;
+import com.ruoyi.system.domain.paltform.vo.FieldVO;
 import com.ruoyi.system.domain.paltform.vo.SearchConditions;
 import com.ruoyi.system.domain.paltform.vo.TableFieldInfoVO;
 import com.ruoyi.system.service.ITableInfoService;
@@ -68,11 +69,11 @@ public class DataMapController extends BaseController {
 
     @Anonymous
     @ApiOperation("根据关键词检索数据表、筛选——分页")
-    @PostMapping("/table/search")
+    @GetMapping("/table/search")
     public TableDataInfo search(@RequestParam(required = false) @ApiParam(value = "搜索关键字") String keyWords,
                                 @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNum,
                                 @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
-                                @RequestBody(required = false) SearchConditions searchConditions) {
+                                SearchConditions searchConditions) {    
         log.info("----------------------------------->" + searchConditions);
 
         HashMap<String, Object> objectMap = getPage(pageNum, pageSize);
@@ -83,6 +84,7 @@ public class DataMapController extends BaseController {
             } else {
                 objectMap.put("keyWords", "");
             }
+            startPage();
             return getDataTable(tableService.getListByOrder(objectMap));
         }
 
@@ -106,14 +108,16 @@ public class DataMapController extends BaseController {
 
         if ((searchConditions.getCreateTime() == null || searchConditions.getUpdateTime() == null)) {
             objectMap.put("keyWords", keyWords);
+            startPage();
             return getDataTable(tableService.getListByStr(objectMap));
         }
-
+        //objectMap.put("keyWords", StringUtils.isNotBlank(keyWords) ? keyWords : "");
         if (StringUtils.isNotBlank(keyWords)){
             objectMap.put("keyWords", keyWords);
         } else {
             objectMap.put("keyWords", "");
         }
+        startPage();
         List<Tables> tablesList = tableService.getListByOrder(objectMap);
 
         return getDataTable(tablesList);
@@ -121,7 +125,7 @@ public class DataMapController extends BaseController {
 
     @Anonymous
     @ApiOperation("数据表批量公开/隐藏")
-    @PutMapping("/table/open/batch")
+    @PostMapping("/table/open/batch")
     public AjaxResult batchOpenOr(Integer[] ids, Integer status){
 
         tableService.batchUpdateById(ids, status);
@@ -135,7 +139,11 @@ public class DataMapController extends BaseController {
     @ApiOperation("数据表字段——修改")
     @PutMapping("/table/field/update")
     @Transactional
-    public AjaxResult updateTableField(@RequestBody List<TableFieldInfoVO> tableField, @RequestParam String tableName){
+    //public AjaxResult updateTableField(@RequestBody List<TableFieldInfoVO> tableField, @RequestParam String tableName){
+    public AjaxResult updateTableField(@RequestBody FieldVO fieldVO){
+
+        String tableName = fieldVO.getTableName();
+        List<TableFieldInfoVO> tableField = fieldVO.getTableFieldInfoVOs();
         // 查询库表信息
         LambdaQueryWrapper<Tables> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Tables::getTableName, tableName);
@@ -163,6 +171,21 @@ public class DataMapController extends BaseController {
 
         return AjaxResult.success();
     }
+
+    //@Anonymous
+    //@ApiOperation("数据表字段——修改")
+    //@PutMapping("/table/test")
+    //@Transactional
+    //public AjaxResult test(@RequestBody FieldVO fieldVO){
+    //    System.out.println(fieldVO.getTableName());
+    //    System.out.println("------------------------------>");
+    //
+    //    List<TableFieldInfoVO> tableFieldInfoVOs = fieldVO.getTableFieldInfoVOs();
+    //    for (TableFieldInfoVO tableFieldInfoVO : tableFieldInfoVOs) {
+    //        System.out.println(tableFieldInfoVO);
+    //    }
+    //    return AjaxResult.success();
+    //}
 
 
 }

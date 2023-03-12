@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.CateMapper">
+
+    <!-- 常用标签 -->
+    <resultMap id="BaseResultMap" type="com.ruoyi.system.domain.paltform.Cate">
+        <id column="id"                 jdbcType="INTEGER"       property="id"/>
+        <result column="cate_name"      jdbcType="VARCHAR"      property="cateName"/>
+        <result column="cate_level"     jdbcType="INTEGER"      property="cateLevel"/>
+        <result column="create_time"    jdbcType="VARCHAR"      property="createTime"/>
+        <result column="update_time"    jdbcType="VARCHAR"      property="updateTime"/>
+        <result column="is_deleted"     jdbcType="INTEGER"      property="isDeleted"/>
+        <result column="parent_id"      jdbcType="INTEGER"      property="parentId"/>
+        <result column="description"    jdbcType="VARCHAR"       property="description"/>
+        <result column="dept"           jdbcType="VARCHAR"      property="dept"/>
+        <result column="author"         jdbcType="VARCHAR"      property="author"/>
+    </resultMap>
+
+
+    <update id="updateCate" parameterType="Cate">
+        update dsmp_cate
+        <set>
+            <if test="cateName != null and cateName != ''">cate_name = #{cateName},</if>
+            <if test="parentId != null and parentId != ''">parent_id = #{parentId},</if>
+            <if test="dept != null and dept != ''">dept = #{dept},</if>
+            <if test="description != null and description != ''">description = #{description},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
