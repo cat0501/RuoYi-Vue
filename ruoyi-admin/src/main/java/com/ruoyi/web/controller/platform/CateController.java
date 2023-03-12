@@ -1,11 +1,8 @@
 package com.ruoyi.web.controller.platform;
 
-<<<<<<< HEAD
 import com.ruoyi.common.annotation.Anonymous;
-=======
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoyi.common.core.controller.BaseController;
->>>>>>> 3ac8090dd738de7c9708172c72bf3562ae276b99
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.paltform.Cate;
 import com.ruoyi.system.domain.paltform.Tables;
@@ -181,11 +178,19 @@ public class CateController extends BaseController {
         System.out.println(count);
     }
 
+    public static void main(String[] args) {
+        System.out.println("欢迎来到沸点冬日嘉年华");
+    }
+
+
     //public static void main(String[] args) {
     //    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     //
     //    String str = sdf.format(Date.parse("Thu Jul 22 23:58:32 CST 2010"));
     //    System.out.println(str);
     //}
+
+
+
 
 }
